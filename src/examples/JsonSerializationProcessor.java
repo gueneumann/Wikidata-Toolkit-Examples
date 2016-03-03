@@ -74,6 +74,7 @@ public class JsonSerializationProcessor implements EntityDocumentProcessor {
 	 *             if there was a problem in writing the output file
 	 */
 	public static void main(String[] args) throws IOException {
+		
 		ExampleHelpers.configureLogging();
 		JsonSerializationProcessor.printDocumentation();
 
