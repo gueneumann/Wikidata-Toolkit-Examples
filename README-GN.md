@@ -7,9 +7,13 @@ What's found in this repository
 
 I copy local dumps here:
 
-/Users/gune00/git/Wikidata-Toolkit-Examples/dumpfiles/wikidatawiki
+../data/WikiData/dumpfiles/wikidatawiki
 
-Should move and use directory under ../data
+or better to 
+
+/Volumes/data2/WikiData
+
+Adapt code in ExampleHelpers
 
 Günnies Experiments
 -------------------------------
