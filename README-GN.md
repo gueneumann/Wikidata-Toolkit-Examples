@@ -78,4 +78,4 @@ Processing data:
 - output of wc command
 	43631144 643764664 4658296212 dewiki-latest-pages-articles.txt
 
-- Size: about 4,7 GB uncompressed
+- Size: about 4,7 GB uncompressed, 1,79 compressed
