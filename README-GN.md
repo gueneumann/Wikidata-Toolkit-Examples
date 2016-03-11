@@ -67,7 +67,7 @@ Processing took some hours on my computer, but because computer slept over night
 
 Processing data:
 - Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
-- Output: 	dewiki-latest-pages-articles.txt
+- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
 			
 
 - resulted in processing of about 
@@ -79,3 +79,26 @@ Processing data:
 	43631144 643764664 4658296212 dewiki-latest-pages-articles.txt
 
 - Size: about 4,7 GB uncompressed, 1,79 compressed
+
+Processing latest-dump for EN-Wikipedia
+---------------------------------------
+
+Processing time on my MacBookPro:
+real	406m26.239s -> about 6,76667 hours
+user	261m4.480s
+sys		90m53.692s
+
+Processing data:
+- Input: 	data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
+- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt
+			
+
+- resulted in processing of about 
+	Pages: 		9,880,000
+	Sents: 	  108,800,000
+	Tokens:	1,961,587,703
+
+- output of wc
+	108826743 1961587703 11878221225 enwiki-latest-pages-articles.txt
+
+- Size: about 11,9 GB uncompressed, 4,37 compressed
