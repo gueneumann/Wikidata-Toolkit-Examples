@@ -69,7 +69,7 @@ Processing took some hours on my computer, but because computer slept over night
 
 Processing data:
 - Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
-- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
+- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt.bz2
 			
 
 - resulted in processing of about 
@@ -92,7 +92,7 @@ sys		90m53.692s
 
 Processing data:
 - Input: 	data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
-- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt
+- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt.bz2
 			
 
 - resulted in processing of about 
