@@ -69,7 +69,7 @@ Processing took some hours on my computer, but because computer slept over night
 
 Processing data:
 - Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
-- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt.bz2
+- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
 			
 
 - resulted in processing of about 
@@ -92,7 +92,7 @@ sys		90m53.692s
 
 Processing data:
 - Input: 	data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
-- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt.bz2
+- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt
 			
 
 - resulted in processing of about 
@@ -104,3 +104,8 @@ Processing data:
 	108826743 1961587703 11878221225 enwiki-latest-pages-articles.txt
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
+
+TODO Next
+----------
+
+Also make sure to create .bz2 output files
