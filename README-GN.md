@@ -7,6 +7,10 @@ TESTIX
 What's found in this repository
 -------------------------------
 
+Dumps can be downloaded from here:
+
+https://dumps.wikimedia.org/enwiki/latest/
+
 I copy local dumps here:
 
 ../data/WikiData/dumpfiles/wikidatawiki
