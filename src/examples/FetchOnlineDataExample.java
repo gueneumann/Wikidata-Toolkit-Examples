@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.wikidata.wdtk.datamodel.helpers.Datamodel;
 import org.wikidata.wdtk.datamodel.interfaces.EntityDocument;
 import org.wikidata.wdtk.datamodel.interfaces.ItemDocument;
 import org.wikidata.wdtk.datamodel.interfaces.PropertyIdValue;
@@ -37,7 +38,7 @@ public class FetchOnlineDataExample {
 		printDocumentation();
 
 		WikibaseDataFetcher wbdf = WikibaseDataFetcher.getWikidataDataFetcher();
-
+		
 		System.out.println("*** Fetching data for one entity:");
 		EntityDocument q42 = wbdf.getEntityDocument("Q42");
 		System.out
