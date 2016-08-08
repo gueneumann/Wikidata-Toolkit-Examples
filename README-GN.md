@@ -113,3 +113,25 @@ TODO Next
 ----------
 
 Also make sure to create .bz2 output files
+
+Alignment by Wiki Anchors
+----------
+
+Create anchor-based Wikipedia Text pages:
+- for each Wikipedia-Title link of a wikipedia page, substitute surface text by the link
+- and eventually also be the FreeBase/Wikidata type of that page
+- This gives an automatically annotated corpus which can be used for NER and OIE
+
+Project embeddings of foreign language to English using 
+	- CCA = Canonical Correlation Analysis, which creates a projection vector (ako dictionary) for aligning
+		foreign language and English language
+
+- Create monolingual embeddings
+	- substitute wikipedia text as above
+	- create skip-gram model using word2vec
+
+- Create two dictionaries:
+	- anchor text foreign language -> title English
+	- token i of anchor text -> title 
+- compute also counts
+- 
