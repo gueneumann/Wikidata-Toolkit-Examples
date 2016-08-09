@@ -119,10 +119,9 @@ Create BZ2 /GZ output file
 -----------------------
 
 Still to do, but see 
-http://www.oracle.com/technetwork/articles/java/compress-1565076.html
+[Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
 
-Alignment by Wiki Anchors
-----------
+# Alignment by Wiki Anchors
 
 Create anchor-based Wikipedia Text pages:
 - for each Wikipedia-Title link of a wikipedia page, substitute surface text by the link
