@@ -109,10 +109,17 @@ Processing data:
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
 
-TODO Next
-----------
+Trial run
+---------
 
-Also make sure to create .bz2 output files
+/Users/gune00/data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
+/Users/gune00/data/WikiPedia/enwiki-latest-pages-articles-test2.txt
+
+Create BZ2 /GZ output file
+-----------------------
+
+Still to do, but see 
+http://www.oracle.com/technetwork/articles/java/compress-1565076.html
 
 Alignment by Wiki Anchors
 ----------
@@ -134,4 +141,24 @@ Project embeddings of foreign language to English using
 	- anchor text foreign language -> title English
 	- token i of anchor text -> title 
 - compute also counts
-- 
+
+Title page anchor:
+
+Via getText() it looks like this:
+'''Affirming the consequent''', sometimes called '''converse error''', '''fallacy of the converse''' or '''confusion of necessity and sufficiency''', is a [[formal fallacy]] of inferring the [[converse (logic)|converse]] from the original statement. The corresponding argument has the general [[argument form|form]]:
+
+-> [[formal fallacy]] -> https://en.wikipedia.org/wiki/Formal_fallacy
+
+In this case, title anchor text is same as link.
+
+-> [[converse (logic)|converse]] -> https://en.wikipedia.org/wiki/Converse_(logic)
+
+In this case title anchor text is converse
+
+First simple WikiData dump reader
+---------------------------------------
+/wdtk_examples/src/gntests/WikiDataExtractor.java
+
+* processes local dump
+* creates a jackson object for each line and counts lines
+* extracts field "id"

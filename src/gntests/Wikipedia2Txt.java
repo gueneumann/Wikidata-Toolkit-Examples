@@ -49,6 +49,7 @@ public class Wikipedia2Txt {
 			if (page.isMain()){
 				System.out.println("---------------- IS MAIN ------------------------");
 				System.out.println(page.getTitle());
+				System.out.println(page.getText());
 				System.out.println("----------------------------------------");		
 			}
 			else {
@@ -162,7 +163,7 @@ public class Wikipedia2Txt {
 		Wikipedia2Txt.outStream = new BufferedWriter (new OutputStreamWriter 
 				(new FileOutputStream(toFile), "utf-8"));
 
-		WikiXMLParser wxp = new WikiXMLParser(dumpfile, new ArticleFilter());
+		WikiXMLParser wxp = new WikiXMLParser(dumpfile, new GNArticleFilter());
 
 		wxp.parse();
 
