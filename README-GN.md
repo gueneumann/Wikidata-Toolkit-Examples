@@ -136,10 +136,12 @@ Project embeddings of foreign language to English using
 	- substitute wikipedia text as above
 	- create skip-gram model using word2vec
 
-- Create two dictionaries:
-	- anchor text foreign language -> title English
-	- token i of anchor text -> title 
-- compute also counts
+- Apply CCA (Canonical Correlation Analysis - c f. canoncorr in Matlab
+	- applied on word embeddings of two languages computes two projection matrices for the languages
+	- these can be multiplied with the word embeddings to give new matrices
+	- details in, details in [[Faruqui and Dyer, EACL, 2014]] (http://www.aclweb.org/anthology/E/E14/E14-1049.pdf)
+	- python and matlab based code in https://github.com/mfaruqui/crosslingual-cca
+
 
 Title page anchor:
 
@@ -161,3 +163,4 @@ First simple WikiData dump reader
 * processes local dump
 * creates a jackson object for each line and counts lines
 * extracts field "id"
++ basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java

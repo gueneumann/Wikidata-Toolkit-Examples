@@ -3,6 +3,8 @@ package gntests;
 /**
  * See also /GNT/src/main/java/corpus/WikiPediaConllReader.java
  * Can also used code from examples/
+ * Actually same as: /wdtk_examples/src/examples/JsonSerializationProcessor.java
+ * 
  */
 
 import java.io.BufferedInputStream;
@@ -18,6 +20,7 @@ import org.apache.commons.compress.compressors.CompressorInputStream;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 public class WikiDataExtractor {
 
@@ -49,6 +52,9 @@ public class WikiDataExtractor {
 			lineCnt++;
 		}
 		reader.close();
+	}
+	
+	public void testJsonSerializer(){
 	}
 
 	public static void main(String[] args) throws IOException, CompressorException{
