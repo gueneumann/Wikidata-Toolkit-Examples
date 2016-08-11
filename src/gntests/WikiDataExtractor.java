@@ -33,6 +33,7 @@ public class WikiDataExtractor {
 	}
 
 	public void extract() throws IOException, CompressorException {
+		// temporally store on local machine, then faster processing
 		String archiveName = "/Volumes/data2/WikiData/latest-all.json.bz2";
 		BufferedReader reader = WikiDataExtractor.getBufferedReaderForCompressedFile(archiveName);
 		String line = "";
@@ -45,8 +46,8 @@ public class WikiDataExtractor {
 			if (!line.equals("[")){
 				Map<String,Object> jsonObject = mapper.readValue(line, Map.class); 
 				if ((lineCnt % mod) == 0) {
-					System.out.println(lineCnt);
 					System.out.println(jsonObject.get("id"));
+					System.out.println(lineCnt);
 				}
 			}
 			lineCnt++;

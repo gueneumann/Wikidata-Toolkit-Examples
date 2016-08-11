@@ -25,7 +25,7 @@ but results on
 
 Adapt code in ExampleHelpers
 
-Günnies Experiments
+# Günnies Experiments
 -------------------------------
 
 set 
@@ -50,12 +50,17 @@ to make sure local dumps are used.
 2016-03-03 15:52:51 INFO  - Processed 17637168 entities in 739 sec (23866 per second)
 Serialized 1911 item documents to JSON file json-serialization-example.json.gz.
 
-Ok, it seems to be ok to process one WikiData dump and extract information.
+Running LocalDUmpFileExample.java with "/Volumes/data2/WikiData/latest-all.json.gz":
 
-Now, what information should I extract ? And then ?
+Processing a local dump file with all meta-data set:
+2016-08-11 10:04:15 INFO  - Processing JSON dump file /Volumes/data2/WikiData/latest-all.json.gz (wikidatawiki/json/20150815)
+2016-08-11 10:25:37 INFO  - Processed 46508138 entities in 2611 sec (17812 per second)
 
-Adding Wikipedia page extraction
---------------------------------
+Processing gntests.WikiDataExtractor.main(String[]) with "/Volumes/data2/WikiData/latest-all.json.bz2":
+NOTE: it means using external USB2 device.
+Start at: 10:35:02
+
+# Adding Wikipedia page extraction
 
 I installed via Maven the following package:
 https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home
@@ -66,8 +71,7 @@ I will try it out. Seems to work: gntests/Wikipedia2Txt.java
 
 Code based on http://trulymadlywordly.blogspot.de/2011/03/creating-text-corpus-from-wikipedia.html
 
-Processing latest-dump for DE-Wikipedia
----------------------------------------
+# Processing latest-dump for DE-Wikipedia
 
 Processing took some hours on my computer, but because computer slept over night.
 
@@ -86,8 +90,7 @@ Processing data:
 
 - Size: about 4,7 GB uncompressed, 1,79 compressed
 
-Processing latest-dump for EN-Wikipedia
----------------------------------------
+# Processing latest-dump for EN-Wikipedia
 
 Processing time on my MacBookPro:
 real	406m26.239s -> about 6,76667 hours
@@ -121,46 +124,12 @@ Create BZ2 /GZ output file
 Still to do, but see 
 [Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
 
-# Alignment by Wiki Anchors
 
-Create anchor-based Wikipedia Text pages:
-- for each Wikipedia-Title link of a wikipedia page, substitute surface text by the link
-- and eventually also be the FreeBase/Wikidata type of that page
-- This gives an automatically annotated corpus which can be used for NER and OIE
-
-Project embeddings of foreign language to English using 
-	- CCA = Canonical Correlation Analysis, which creates a projection vector (ako dictionary) for aligning
-		foreign language and English language
-
-- Create monolingual embeddings
-	- substitute wikipedia text as above
-	- create skip-gram model using word2vec
-
-- Apply CCA (Canonical Correlation Analysis - c f. canoncorr in Matlab
-	- applied on word embeddings of two languages computes two projection matrices for the languages
-	- these can be multiplied with the word embeddings to give new matrices
-	- details in, details in [[Faruqui and Dyer, EACL, 2014]] (http://www.aclweb.org/anthology/E/E14/E14-1049.pdf)
-	- python and matlab based code in https://github.com/mfaruqui/crosslingual-cca
-
-
-Title page anchor:
-
-Via getText() it looks like this:
-'''Affirming the consequent''', sometimes called '''converse error''', '''fallacy of the converse''' or '''confusion of necessity and sufficiency''', is a [[formal fallacy]] of inferring the [[converse (logic)|converse]] from the original statement. The corresponding argument has the general [[argument form|form]]:
-
--> [[formal fallacy]] -> https://en.wikipedia.org/wiki/Formal_fallacy
-
-In this case, title anchor text is same as link.
-
--> [[converse (logic)|converse]] -> https://en.wikipedia.org/wiki/Converse_(logic)
-
-In this case title anchor text is converse
-
-First simple WikiData dump reader
+# First simple WikiData dump reader
 ---------------------------------------
 /wdtk_examples/src/gntests/WikiDataExtractor.java
 
 * processes local dump
 * creates a jackson object for each line and counts lines
 * extracts field "id"
-+ basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
+* basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
