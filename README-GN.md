@@ -26,7 +26,7 @@ but results on
 Adapt code in ExampleHelpers
 
 # Günnies Experiments
--------------------------------
+
 
 set 
 	examples.ExampleHelpers.OFFLINE_MODE = true;
@@ -59,6 +59,8 @@ Processing a local dump file with all meta-data set:
 Processing gntests.WikiDataExtractor.main(String[]) with "/Volumes/data2/WikiData/latest-all.json.bz2":
 NOTE: it means using external USB2 device.
 Start at: 10:35:02
+23250000 entities -> index via "id"
+End at:	11:35
 
 # Adding Wikipedia page extraction
 
@@ -70,6 +72,15 @@ It helps to extract plain text from Wikipedia pages.
 I will try it out. Seems to work: gntests/Wikipedia2Txt.java
 
 Code based on http://trulymadlywordly.blogspot.de/2011/03/creating-text-corpus-from-wikipedia.html
+
+Create BZ2 /GZ output file
+-----------------------
+
+Still to do, but see 
+[Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
+Done: gntests.Wikipedia2Txt.getBufferedWriterForTextFile(String)
+
+View files with bzcat 
 
 # Processing latest-dump for DE-Wikipedia
 
@@ -112,17 +123,27 @@ Processing data:
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
 
-Trial run
----------
+# Processing latest-dump for FR-Wikipedia
 
-/Users/gune00/data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
-/Users/gune00/data/WikiPedia/enwiki-latest-pages-articles-test2.txt
 
-Create BZ2 /GZ output file
------------------------
+/Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.xml.bz2
+/Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.txt.bz2
 
-Still to do, but see 
-[Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
+-> at pages 730000 the extractor seems to loop, so had to cancel
+Status so far:
+
+ wc frwiki-latest-pages-articles.txt
+ 9893619 182051605 1170755726 frwiki-latest-pages-articles.txt
+ -> Means: missing about 50%
+
+# Processing latest-dump for DA-Wikipedia
+
+Ok, works without problem
+wc dawiki-latest-pages-articles.txt 
+ 2564059 40883286 267532409 dawiki-latest-pages-articles.txt
+
+Then:
+run this on all 22 relevant Wikipedia sites for which I have UD languages 
 
 
 # First simple WikiData dump reader

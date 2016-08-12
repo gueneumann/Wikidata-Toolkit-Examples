@@ -1,7 +1,9 @@
 package gntests;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -17,6 +19,9 @@ import info.bliki.wiki.dump.WikiXMLParser;
 import info.bliki.wiki.filter.PlainTextConverter;
 import info.bliki.wiki.model.WikiModel;
 
+import org.apache.commons.compress.compressors.CompressorException;
+import org.apache.commons.compress.compressors.CompressorOutputStream;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.xml.sax.SAXException;
 
 public class Wikipedia2Txt {
@@ -67,7 +72,7 @@ public class Wikipedia2Txt {
 	 * Print title an content of all the wiki pages in the dump.
 	 * 
 	 */
-	static class ArticleFilter implements IArticleFilter {
+	static class TextArticleFilter implements IArticleFilter {
 
 		final static Pattern regex = Pattern.compile("[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]", 
 				Pattern.CANON_EQ);
@@ -142,12 +147,21 @@ public class Wikipedia2Txt {
 		}
 
 	}
+	
+	public static BufferedWriter getBufferedWriterForTextFile(String fileOut) throws FileNotFoundException, CompressorException, UnsupportedEncodingException {
+		FileOutputStream fout = new FileOutputStream(fileOut);
+		BufferedOutputStream bout = new BufferedOutputStream(fout);
+		CompressorOutputStream out = new CompressorStreamFactory().createCompressorOutputStream("bzip2", bout);
+		BufferedWriter br2 = new BufferedWriter(new OutputStreamWriter(out, "utf-8"));
+		return br2;
+	}
 
 	/**
 	 * @param args
 	 * @throws SAXException 
 	 * @throws IOException 
 	 * @throws SAXException 
+	 * @throws CompressorException 
 	 * @throws ParserConfigurationException 
 	 */
 
@@ -155,15 +169,17 @@ public class Wikipedia2Txt {
 	 * Arg1: dumpfile
 	 * Arg2: output.txt
 	 */
-	public static void main(String[] args) throws IOException, SAXException {
+	public static void main(String[] args) throws IOException, SAXException, CompressorException {
 
 		File dumpfile = new File(args[0]);
 
-		File toFile = new File(args[1]);
-		Wikipedia2Txt.outStream = new BufferedWriter (new OutputStreamWriter 
-				(new FileOutputStream(toFile), "utf-8"));
+		// Directly compress extracted text file
+		Wikipedia2Txt.outStream = Wikipedia2Txt.getBufferedWriterForTextFile(args[1]);
+		
+		// Do not compress - I am using this for testing, because at least for frwiki I have termination problems
+		// Wikipedia2Txt.outStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf-8"));
 
-		WikiXMLParser wxp = new WikiXMLParser(dumpfile, new GNArticleFilter());
+		WikiXMLParser wxp = new WikiXMLParser(dumpfile, new TextArticleFilter());
 
 		wxp.parse();
 
