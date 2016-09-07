@@ -29,6 +29,22 @@ Adapt code in ExampleHelpers
 
 http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/
 
+# Handling unicode in regexpr
+
+http://jrgraphix.net/r/Unicode/0900-097F
+http://www.regular-expressions.info/unicode.html#prop
+
+# HINDI
+
+https://de.wikibooks.org/wiki/Devanagari:_Verschiedenes#Satzzeichen
+
+http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
+
+Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
+
+
+danda (\u0964) or doubledanda (\u0965) as eos sign
+
 # Günnies Experiments
 
 

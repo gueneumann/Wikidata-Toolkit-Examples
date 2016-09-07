@@ -73,14 +73,28 @@ public class Wikipedia2Txt {
 	 * 
 	 */
 	static class TextArticleFilter implements IArticleFilter {
+		// The version from the original method:
 
 		// "[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]"
+		// Its structure:
 		// [A-Z] -> Starts with capital character 
+		// \p{L} for Unicode letters, \p{N} for Unicode digits -> from http://www.regular-expressions.info/unicode.html#prop
 		// [\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-] -> ?
 		// [\\.!] -> ends with . or !
+
+		// why the Pattern.CANON_EQ
+		// If you are using Java, you can pass the CANON_EQ flag as the second parameter to Pattern.compile(). 
+		// This tells the Java regex engine to consider canonically equivalent characters as identical. 
+		// The regex à encoded as U+00E0 matches à encoded as U+0061 U+0300, and vice versa. 
+		// None of the other regex engines currently support canonical equivalence while matching.
+
 		// TODO
 		// THis is the problematic case because it is too restricted, does not work for Hindi Russia ?
-		final static Pattern regex = Pattern.compile("[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]", 
+		// Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
+		// "[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]"
+
+
+		final Pattern regex = Pattern.compile("[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]", 
 				Pattern.CANON_EQ);
 
 		// Convert to plain text
@@ -108,8 +122,8 @@ public class Wikipedia2Txt {
 
 				// String refexp = "[A-Za-z0-9+\\s\\{\\}:_=''|\\.\\w#\"\\(\\)\\[\\]/,?&%Ð-]+";
 
-				
-				
+
+
 				String wikiText = page.getText().
 						replaceAll("[=]+[A-Za-z+\\s-]+[=]+", " ").
 						replaceAll("\\{\\{[A-Za-z0-9+\\s-]+\\}\\}"," ").
@@ -117,8 +131,8 @@ public class Wikipedia2Txt {
 						replaceAll("(?m)<ref name=\"[A-Za-z0-9\\s-]+\">.+</ref>"," ").
 						replaceAll("<ref>"," <ref>");
 
-				
-				
+
+
 				// GN: added on March, 2016
 				pageCnt++;
 				if ((pageCnt % pageMod) == 0) System.out.println("Pages: " + pageCnt);
@@ -128,19 +142,19 @@ public class Wikipedia2Txt {
 						replaceAll("\\{\\{[A-Za-z+\\s-]+\\}\\}"," ");
 
 				// It has all text! also for Hindi
-				// System.out.println(plainStr);
-				
+				//System.out.println(plainStr);
+
 				Matcher regexMatcher = regex.matcher(plainStr);
 				while (regexMatcher.find())
 				{
 					// Get sentences with 6 or more words
 					String sentence = regexMatcher.group();
-					
+
 					if (matchSpaces(sentence, 5)) {
-						
+
 						System.out.println(sentence);
-				
-						
+
+
 						outStream.write(sentence);
 						outStream.newLine();
 						// GN: added on March, 2016
@@ -163,7 +177,7 @@ public class Wikipedia2Txt {
 		}
 
 	}
-	
+
 	public static BufferedWriter getBufferedWriterForTextFile(String fileOut) throws FileNotFoundException, CompressorException, UnsupportedEncodingException {
 		FileOutputStream fout = new FileOutputStream(fileOut);
 		BufferedOutputStream bout = new BufferedOutputStream(fout);
@@ -191,7 +205,7 @@ public class Wikipedia2Txt {
 
 		// Directly compress extracted text file
 		Wikipedia2Txt.outStream = Wikipedia2Txt.getBufferedWriterForTextFile(args[1]);
-		
+
 		// Do not compress - I am using this for testing, because at least for frwiki I have termination problems
 		// Wikipedia2Txt.outStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf-8"));
 
