@@ -74,6 +74,12 @@ public class Wikipedia2Txt {
 	 */
 	static class TextArticleFilter implements IArticleFilter {
 
+		// "[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]"
+		// [A-Z] -> Starts with capital character 
+		// [\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-] -> ?
+		// [\\.!] -> ends with . or !
+		// TODO
+		// THis is the problematic case because it is too restricted, does not work for Hindi Russia ?
 		final static Pattern regex = Pattern.compile("[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]", 
 				Pattern.CANON_EQ);
 
@@ -102,6 +108,8 @@ public class Wikipedia2Txt {
 
 				// String refexp = "[A-Za-z0-9+\\s\\{\\}:_=''|\\.\\w#\"\\(\\)\\[\\]/,?&%Ð-]+";
 
+				
+				
 				String wikiText = page.getText().
 						replaceAll("[=]+[A-Za-z+\\s-]+[=]+", " ").
 						replaceAll("\\{\\{[A-Za-z0-9+\\s-]+\\}\\}"," ").
@@ -109,6 +117,8 @@ public class Wikipedia2Txt {
 						replaceAll("(?m)<ref name=\"[A-Za-z0-9\\s-]+\">.+</ref>"," ").
 						replaceAll("<ref>"," <ref>");
 
+				
+				
 				// GN: added on March, 2016
 				pageCnt++;
 				if ((pageCnt % pageMod) == 0) System.out.println("Pages: " + pageCnt);
@@ -117,14 +127,20 @@ public class Wikipedia2Txt {
 				String plainStr = wikiModel.render(new PlainTextConverter(), wikiText).
 						replaceAll("\\{\\{[A-Za-z+\\s-]+\\}\\}"," ");
 
+				// It has all text! also for Hindi
+				// System.out.println(plainStr);
+				
 				Matcher regexMatcher = regex.matcher(plainStr);
 				while (regexMatcher.find())
 				{
 					// Get sentences with 6 or more words
 					String sentence = regexMatcher.group();
-
+					
 					if (matchSpaces(sentence, 5)) {
-
+						
+						System.out.println(sentence);
+				
+						
 						outStream.write(sentence);
 						outStream.newLine();
 						// GN: added on March, 2016

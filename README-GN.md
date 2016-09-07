@@ -25,6 +25,10 @@ but results on
 
 Adapt code in ExampleHelpers
 
+# Useful Other Links
+
+http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/
+
 # Günnies Experiments
 
 
@@ -82,6 +86,9 @@ Done: gntests.Wikipedia2Txt.getBufferedWriterForTextFile(String)
 
 View files with bzcat 
 
+Uncompress with (preserving bz2 file):
+bzip2 -dk  <filename.bz2
+
 # Processing latest-dump for DE-Wikipedia
 
 Processing took some hours on my computer, but because computer slept over night.
@@ -125,7 +132,6 @@ Processing data:
 
 # Processing latest-dump for FR-Wikipedia
 
-
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.xml.bz2
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.txt.bz2
 
@@ -136,16 +142,32 @@ Status so far:
  9893619 182051605 1170755726 frwiki-latest-pages-articles.txt
  -> Means: missing about 50%
 
-# Processing latest-dump for DA-Wikipedia
+# Processing Danish latest-dump for DA-Wikipedia
 
 Ok, works without problem
 wc dawiki-latest-pages-articles.txt 
  2564059 40883286 267532409 dawiki-latest-pages-articles.txt
 
+
+# Processing Hungarian latest-dump for HU-Wikipedia
+
+Took on lns-87009 from/to gfs-neumann: real    30m38.819s
+
+bzcat huwiki-latest-pages-articles.txt.bz2 | wc
+5118735 70951004 575090000
+
+
+
+# Processing Turkish latest-dump for TR-Wikipedia
+
+Took on lns-87009 from/to gfs-neumann: real    18m26.591s
+
+bzcat trwiki-latest-pages-articles.txt.bz2 | wc
+3199756 41101227 342458051
+
+
 Then:
 run this on all 22 relevant Wikipedia sites for which I have UD languages 
-
-
 # First simple WikiData dump reader
 ---------------------------------------
 /wdtk_examples/src/gntests/WikiDataExtractor.java
