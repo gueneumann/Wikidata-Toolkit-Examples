@@ -34,16 +34,13 @@ http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/
 http://jrgraphix.net/r/Unicode/0900-097F
 http://www.regular-expressions.info/unicode.html#prop
 
-# HINDI
+# HINDI/Korean/Russia/Bulgarian
 
 https://de.wikibooks.org/wiki/Devanagari:_Verschiedenes#Satzzeichen
 
 http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
 
-Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
-
-
-danda (\u0964) or doubledanda (\u0965) as eos sign
+I solved by using a lnguage flag form the wikipedia dump file name and UTF extensions for Java reg expr
 
 # Günnies Experiments
 
@@ -184,6 +181,11 @@ bzcat trwiki-latest-pages-articles.txt.bz2 | wc
 
 Then:
 run this on all 22 relevant Wikipedia sites for which I have UD languages 
+
+-> it is now clear how to do it
+
+
+
 # First simple WikiData dump reader
 ---------------------------------------
 /wdtk_examples/src/gntests/WikiDataExtractor.java

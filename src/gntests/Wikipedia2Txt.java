@@ -183,9 +183,6 @@ public class Wikipedia2Txt {
 
 					if (matchSpaces(sentence, 5)) {
 
-						System.out.println(sentence);
-
-
 						outStream.write(sentence);
 						outStream.newLine();
 						// GN: added on March, 2016
