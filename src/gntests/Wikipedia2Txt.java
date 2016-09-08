@@ -26,6 +26,8 @@ import org.xml.sax.SAXException;
 
 public class Wikipedia2Txt {
 
+	// Dumpfile
+	public static File dumpFile ;
 	// GN: added on March, 2016
 	public static BufferedWriter outStream = null;
 	static int sentCnt = 0;
@@ -72,33 +74,62 @@ public class Wikipedia2Txt {
 	 * Print title an content of all the wiki pages in the dump.
 	 * 
 	 */
+
+	// The version from the original method:
+
+	// "[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]"
+	// Its structure:
+	// [A-Z] -> Starts with capital character 
+	// \p{L} for Unicode letters, \p{N} for Unicode digits -> from http://www.regular-expressions.info/unicode.html#prop
+	// [\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-] -> ?
+	// [\\.!] -> ends with . or !
+
+	// why the Pattern.CANON_EQ
+	// If you are using Java, you can pass the CANON_EQ flag as the second parameter to Pattern.compile(). 
+	// This tells the Java regex engine to consider canonically equivalent characters as identical. 
+	// The regex à encoded as U+00E0 matches à encoded as U+0061 U+0300, and vice versa. 
+	// None of the other regex engines currently support canonical equivalence while matching.
+
+	// TODO
+	// THis is the problematic case because it is too restricted, does not work for Hindi Russia ?
+	// Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
+	// "[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]"
+
+
 	static class TextArticleFilter implements IArticleFilter {
-		// The version from the original method:
+		String dumpFileLanguagePrefix = Wikipedia2Txt.dumpFile.getName().substring(0, 2);
 
-		// "[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]"
-		// Its structure:
-		// [A-Z] -> Starts with capital character 
-		// \p{L} for Unicode letters, \p{N} for Unicode digits -> from http://www.regular-expressions.info/unicode.html#prop
-		// [\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-] -> ?
-		// [\\.!] -> ends with . or !
-
-		// why the Pattern.CANON_EQ
-		// If you are using Java, you can pass the CANON_EQ flag as the second parameter to Pattern.compile(). 
-		// This tells the Java regex engine to consider canonically equivalent characters as identical. 
-		// The regex à encoded as U+00E0 matches à encoded as U+0061 U+0300, and vice versa. 
-		// None of the other regex engines currently support canonical equivalence while matching.
-
-		// TODO
-		// THis is the problematic case because it is too restricted, does not work for Hindi Russia ?
-		// Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
-		// "[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]"
+		String languagePatternString = this.getLanguageSentenceRegPattern(dumpFileLanguagePrefix);
 
 
-		final Pattern regex = Pattern.compile("[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]", 
-				Pattern.CANON_EQ);
+		final Pattern regex = Pattern.compile(languagePatternString,Pattern.CANON_EQ);
 
 		// Convert to plain text
 		WikiModel wikiModel = new WikiModel("${image}", "${title}");
+
+		public String getLanguageSentenceRegPattern(String langID){
+
+			String patternString = "";
+			switch (langID) {
+			case "hi" : patternString = 
+					"[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]";
+			break;
+			case "ko" : patternString = 
+					"[\\p{IsHangul}][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
+			break;
+			case "ru" : patternString = 
+					"[\\p{IsCyrillic}][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
+			break;
+			case "bg" : patternString = 
+					"[\\p{IsCyrillic}][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
+			break;
+			default : patternString =
+					"[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
+			break;
+
+			}
+			return patternString;
+		}
 
 		public void process(WikiArticle page, Siteinfo siteinfo) throws IOException {
 
@@ -201,7 +232,7 @@ public class Wikipedia2Txt {
 	 */
 	public static void main(String[] args) throws IOException, SAXException, CompressorException {
 
-		File dumpfile = new File(args[0]);
+		Wikipedia2Txt.dumpFile = new File(args[0]);
 
 		// Directly compress extracted text file
 		Wikipedia2Txt.outStream = Wikipedia2Txt.getBufferedWriterForTextFile(args[1]);
@@ -209,7 +240,7 @@ public class Wikipedia2Txt {
 		// Do not compress - I am using this for testing, because at least for frwiki I have termination problems
 		// Wikipedia2Txt.outStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "utf-8"));
 
-		WikiXMLParser wxp = new WikiXMLParser(dumpfile, new TextArticleFilter());
+		WikiXMLParser wxp = new WikiXMLParser(Wikipedia2Txt.dumpFile, new TextArticleFilter());
 
 		wxp.parse();
 
