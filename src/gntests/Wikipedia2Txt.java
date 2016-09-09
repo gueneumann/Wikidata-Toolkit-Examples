@@ -74,34 +74,17 @@ public class Wikipedia2Txt {
 	 * Print title an content of all the wiki pages in the dump.
 	 * 
 	 */
-
-	// The version from the original method:
-
-	// "[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]"
-	// Its structure:
-	// [A-Z] -> Starts with capital character 
-	// \p{L} for Unicode letters, \p{N} for Unicode digits -> from http://www.regular-expressions.info/unicode.html#prop
-	// [\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-] -> ?
-	// [\\.!] -> ends with . or !
-
-	// why the Pattern.CANON_EQ
-	// If you are using Java, you can pass the CANON_EQ flag as the second parameter to Pattern.compile(). 
-	// This tells the Java regex engine to consider canonically equivalent characters as identical. 
-	// The regex à encoded as U+00E0 matches à encoded as U+0061 U+0300, and vice versa. 
-	// None of the other regex engines currently support canonical equivalence while matching.
-
-	// TODO
-	// THis is the problematic case because it is too restricted, does not work for Hindi Russia ?
-	// Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
-	// "[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]"
-
-
+	
 	static class TextArticleFilter implements IArticleFilter {
 		String dumpFileLanguagePrefix = Wikipedia2Txt.dumpFile.getName().substring(0, 2);
 
 		String languagePatternString = this.getLanguageSentenceRegPattern(dumpFileLanguagePrefix);
 
-
+		// why the Pattern.CANON_EQ
+		// If you are using Java, you can pass the CANON_EQ flag as the second parameter to Pattern.compile(). 
+		// This tells the Java regex engine to consider canonically equivalent characters as identical. 
+		// The regex à encoded as U+00E0 matches à encoded as U+0061 U+0300, and vice versa. 
+		// None of the other regex engines currently support canonical equivalence while matching.
 		final Pattern regex = Pattern.compile(languagePatternString,Pattern.CANON_EQ);
 
 		// Convert to plain text
@@ -111,6 +94,7 @@ public class Wikipedia2Txt {
 
 			String patternString = "";
 			switch (langID) {
+			// Hindi: p{IsDevanagari} danda bzw. double danda als Satzende: \u0964 \0965 BUT not ? or !
 			case "hi" : patternString = 
 					"[\\p{IsDevanagari}][\\p{InDevanagari}\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\u0964\u0965]";
 			break;
@@ -123,6 +107,9 @@ public class Wikipedia2Txt {
 			case "bg" : patternString = 
 					"[\\p{IsCyrillic}][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
 			break;
+			// Structure of default:
+			// [A-Z] -> Starts with capital character 
+			// \p{L} for Unicode letters, \p{N} for Unicode digits -> from http://www.regular-expressions.info/unicode.html#prop
 			default : patternString =
 					"[A-Z][\\p{L}\\w\\p{Blank},\\\"\\';\\[\\]\\(\\)-]+[\\.!]";
 			break;
@@ -141,7 +128,6 @@ public class Wikipedia2Txt {
 				try {
 					out = new PrintStream(System.out, true, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -153,16 +139,12 @@ public class Wikipedia2Txt {
 
 				// String refexp = "[A-Za-z0-9+\\s\\{\\}:_=''|\\.\\w#\"\\(\\)\\[\\]/,?&%Ð-]+";
 
-
-
 				String wikiText = page.getText().
 						replaceAll("[=]+[A-Za-z+\\s-]+[=]+", " ").
 						replaceAll("\\{\\{[A-Za-z0-9+\\s-]+\\}\\}"," ").
 						replaceAll("(?m)<ref>.+</ref>"," ").
 						replaceAll("(?m)<ref name=\"[A-Za-z0-9\\s-]+\">.+</ref>"," ").
 						replaceAll("<ref>"," <ref>");
-
-
 
 				// GN: added on March, 2016
 				pageCnt++;
@@ -203,7 +185,6 @@ public class Wikipedia2Txt {
 			}
 			return false;
 		}
-
 	}
 
 	public static BufferedWriter getBufferedWriterForTextFile(String fileOut) throws FileNotFoundException, CompressorException, UnsupportedEncodingException {

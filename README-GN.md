@@ -42,6 +42,22 @@ http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
 
 I solved by using a lnguage flag form the wikipedia dump file name and UTF extensions for Java reg expr
 
+#Russia
+
+real    242m8.505s
+user    237m30.349s
+sys     12m27.707s
+
+Pages: 2750000
+
+bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc
+21097679 287142597 3782566803
+
+# Korean
+
+bzcat kowiki-latest-pages-articles.txt.bz2 | wc
+ 3541361 56825897 485005016
+ 
 # Günnies Experiments
 
 
