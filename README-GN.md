@@ -34,31 +34,9 @@ http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/
 http://jrgraphix.net/r/Unicode/0900-097F
 http://www.regular-expressions.info/unicode.html#prop
 
-# HINDI/Korean/Russia/Bulgarian
 
-https://de.wikibooks.org/wiki/Devanagari:_Verschiedenes#Satzzeichen
-
-http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
-
-I solved by using a lnguage flag form the wikipedia dump file name and UTF extensions for Java reg expr
-
-#Russia
-
-real    242m8.505s
-user    237m30.349s
-sys     12m27.707s
-
-Pages: 2750000
-
-bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc
-21097679 287142597 3782566803
-
-# Korean
-
-bzcat kowiki-latest-pages-articles.txt.bz2 | wc
- 3541361 56825897 485005016
  
-# Günnies Experiments
+## Günnies Experiments
 
 
 set 
@@ -95,7 +73,11 @@ Start at: 10:35:02
 23250000 entities -> index via "id"
 End at:	11:35
 
-# Adding Wikipedia page extraction
+#Extracting Text from WikiPedia Dumps
+
+Do run this on all 22 relevant Wikipedia sites for which I have UD languages 
+
+## Adding Wikipedia page extraction
 
 I installed via Maven the following package:
 https://bitbucket.org/axelclk/info.bliki.wiki/wiki/Home
@@ -106,8 +88,16 @@ I will try it out. Seems to work: gntests/Wikipedia2Txt.java
 
 Code based on http://trulymadlywordly.blogspot.de/2011/03/creating-text-corpus-from-wikipedia.html
 
-Create BZ2 /GZ output file
------------------------
+## First simple WikiData dump reader
+
+/wdtk_examples/src/gntests/WikiDataExtractor.java
+
+* processes local dump
+* creates a jackson object for each line and counts lines
+* extracts field "id"
+* basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
+
+## Create BZ2 /GZ output file
 
 Still to do, but see 
 [Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
@@ -118,7 +108,19 @@ View files with bzcat
 Uncompress with (preserving bz2 file):
 bzip2 -dk  <filename.bz2
 
-# Processing latest-dump for DE-Wikipedia
+## Useful Unix Tools
+
+To extract N random lines from a textualized Wikipedia dump call
+
+bzcat <wikipedia.txt.bz> | gshuf -n N
+
+For example, on my MacBookPro (i7, 16GB Ram) using installed coreutils:
+
+time bzcat dewiki-latest-pages-articles.txt.bz2 | gshuf -n 500 > de500randome-sents.txt
+
+it takes about 3 minutes
+
+## Processing latest-dump for DE-Wikipedia
 
 Processing took some hours on my computer, but because computer slept over night.
 
@@ -126,7 +128,6 @@ Processing data:
 - Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
 - Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
 			
-
 - resulted in processing of about 
 	Pages: 	  3,230,000
 	Sents: 	 43,600,000
@@ -137,7 +138,7 @@ Processing data:
 
 - Size: about 4,7 GB uncompressed, 1,79 compressed
 
-# Processing latest-dump for EN-Wikipedia
+## Processing latest-dump for EN-Wikipedia
 
 Processing time on my MacBookPro:
 real	406m26.239s -> about 6,76667 hours
@@ -159,7 +160,7 @@ Processing data:
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
 
-# Processing latest-dump for FR-Wikipedia
+## Processing latest-dump for FR-Wikipedia
 
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.xml.bz2
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.txt.bz2
@@ -171,14 +172,14 @@ Status so far:
  9893619 182051605 1170755726 frwiki-latest-pages-articles.txt
  -> Means: missing about 50%
 
-# Processing Danish latest-dump for DA-Wikipedia
+## Processing Danish latest-dump for DA-Wikipedia
 
 Ok, works without problem
 wc dawiki-latest-pages-articles.txt 
  2564059 40883286 267532409 dawiki-latest-pages-articles.txt
 
 
-# Processing Hungarian latest-dump for HU-Wikipedia
+## Processing Hungarian latest-dump for HU-Wikipedia
 
 Took on lns-87009 from/to gfs-neumann: real    30m38.819s
 
@@ -187,26 +188,33 @@ bzcat huwiki-latest-pages-articles.txt.bz2 | wc
 
 
 
-# Processing Turkish latest-dump for TR-Wikipedia
+## Processing Turkish latest-dump for TR-Wikipedia
 
 Took on lns-87009 from/to gfs-neumann: real    18m26.591s
 
 bzcat trwiki-latest-pages-articles.txt.bz2 | wc
 3199756 41101227 342458051
 
+## HINDI/Korean/Russia/Bulgarian
 
-Then:
-run this on all 22 relevant Wikipedia sites for which I have UD languages 
+https://de.wikibooks.org/wiki/Devanagari:_Verschiedenes#Satzzeichen
 
--> it is now clear how to do it
+http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
 
+I solved by using a language flag form the wikipedia dump file name and UTF extensions for Java reg expr
 
+## Russia
 
-# First simple WikiData dump reader
----------------------------------------
-/wdtk_examples/src/gntests/WikiDataExtractor.java
+real    242m8.505s
+user    237m30.349s
+sys     12m27.707s
 
-* processes local dump
-* creates a jackson object for each line and counts lines
-* extracts field "id"
-* basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
+Pages: 2750000
+
+bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc
+21097679 287142597 3782566803
+
+## Korean
+
+bzcat kowiki-latest-pages-articles.txt.bz2 | wc
+ 3541361 56825897 485005016
