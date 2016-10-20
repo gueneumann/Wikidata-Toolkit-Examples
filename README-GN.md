@@ -1,29 +1,4 @@
-# Wikidata Toolkit Examples
-
-Here, I memo my current use of these examples.
-
-TESTIX
-
-What's found in this repository
--------------------------------
-
-Dumps can be downloaded from here:
-
-https://dumps.wikimedia.org/enwiki/latest/
-
-I copy local dumps here:
-
-../data/WikiData/dumpfiles/wikidatawiki
-
-or better to 
-
-/Volumes/data2/WikiData
-
-but results on
-
-../data/WikiData/results/
-
-Adapt code in ExampleHelpers
+# Wikidata and WikiPedia Toolkit Examples
 
 # Useful Other Links
 
@@ -35,15 +10,23 @@ http://jrgraphix.net/r/Unicode/0900-097F
 http://www.regular-expressions.info/unicode.html#prop
 
 
- 
-## Günnies Experiments
+# Extracting Information from WikiData
 
+## First simple WikiData dump reader
+
+/wdtk_examples/src/gntests/WikiDataExtractor.java
+
+* processes local dump
+* creates a jackson object for each line and counts lines
+* extracts field "id"
+* basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
+
+### Exampel call
 
 set 
 	examples.ExampleHelpers.OFFLINE_MODE = true;
 	
 to make sure local dumps are used.
-
 
 ********************************************************************
 *** Wikidata Toolkit: JsonSerializationProcessor
@@ -73,10 +56,6 @@ Start at: 10:35:02
 23250000 entities -> index via "id"
 End at:	11:35
 
-#Extracting Text from WikiPedia Dumps
-
-Do run this on all 22 relevant Wikipedia sites for which I have UD languages 
-
 ## Adding Wikipedia page extraction
 
 I installed via Maven the following package:
@@ -88,18 +67,20 @@ I will try it out. Seems to work: gntests/Wikipedia2Txt.java
 
 Code based on http://trulymadlywordly.blogspot.de/2011/03/creating-text-corpus-from-wikipedia.html
 
-## First simple WikiData dump reader
 
-/wdtk_examples/src/gntests/WikiDataExtractor.java
 
-* processes local dump
-* creates a jackson object for each line and counts lines
-* extracts field "id"
-* basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
+#Extracting Text from WikiPedia Dumps
+
+Do run this on all 22 relevant Wikipedia sites for which I have UD languages 
+
+## Where to get the dumps from ?
+
+Dumps can be downloaded from here. e.g, for English:
+
+https://dumps.wikimedia.org/enwiki/latest/
 
 ## Create BZ2 /GZ output file
 
-Still to do, but see 
 [Oracle document] (http://www.oracle.com/technetwork/articles/java/compress-1565076.html)
 Done: gntests.Wikipedia2Txt.getBufferedWriterForTextFile(String)
 
@@ -185,7 +166,6 @@ Took on lns-87009 from/to gfs-neumann: real    30m38.819s
 
 bzcat huwiki-latest-pages-articles.txt.bz2 | wc
 5118735 70951004 575090000
-
 
 
 ## Processing Turkish latest-dump for TR-Wikipedia
