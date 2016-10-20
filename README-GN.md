@@ -87,6 +87,7 @@ Done: gntests.Wikipedia2Txt.getBufferedWriterForTextFile(String)
 View files with bzcat 
 
 Uncompress with (preserving bz2 file):
+
 bzip2 -dk  <filename.bz2
 
 ## Useful Unix Tools
@@ -103,15 +104,22 @@ it takes about 3 minutes
 
 ## Processing latest-dump for DE-Wikipedia
 
+NOTE: tokenization is bad !
+
 Processing took some hours on my computer, but because computer slept over night.
 
 Processing data:
+
 - Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
+
 - Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
 			
 - resulted in processing of about 
+	
 	Pages: 	  3,230,000
+	
 	Sents: 	 43,600,000
+	
 	Tokens:	643,764,664
 	
 - output of wc command
@@ -122,21 +130,30 @@ Processing data:
 ## Processing latest-dump for EN-Wikipedia
 
 Processing time on my MacBookPro:
-real	406m26.239s -> about 6,76667 hours
-user	261m4.480s
-sys		90m53.692s
+
+	real	406m26.239s -> about 6,76667 hours
+	
+	user	261m4.480s
+
+	sys		90m53.692s
 
 Processing data:
+
 - Input: 	data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
+
 - Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt
 			
 
 - resulted in processing of about 
+	
 	Pages: 		9,880,000
+	
 	Sents: 	  108,800,000
+	
 	Tokens:	1,961,587,703
 
 - output of wc
+	
 	108826743 1961587703 11878221225 enwiki-latest-pages-articles.txt
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
@@ -144,19 +161,25 @@ Processing data:
 ## Processing latest-dump for FR-Wikipedia
 
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.xml.bz2
+
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.txt.bz2
 
 -> at pages 730000 the extractor seems to loop, so had to cancel
+
 Status so far:
 
  wc frwiki-latest-pages-articles.txt
+ 
  9893619 182051605 1170755726 frwiki-latest-pages-articles.txt
+ 
  -> Means: missing about 50%
 
 ## Processing Danish latest-dump for DA-Wikipedia
 
 Ok, works without problem
+
 wc dawiki-latest-pages-articles.txt 
+ 
  2564059 40883286 267532409 dawiki-latest-pages-articles.txt
 
 
@@ -165,6 +188,7 @@ wc dawiki-latest-pages-articles.txt
 Took on lns-87009 from/to gfs-neumann: real    30m38.819s
 
 bzcat huwiki-latest-pages-articles.txt.bz2 | wc
+
 5118735 70951004 575090000
 
 
@@ -172,8 +196,7 @@ bzcat huwiki-latest-pages-articles.txt.bz2 | wc
 
 Took on lns-87009 from/to gfs-neumann: real    18m26.591s
 
-bzcat trwiki-latest-pages-articles.txt.bz2 | wc
-3199756 41101227 342458051
+bzcat trwiki-latest-pages-articles.txt.bz2 | wc 3199756 41101227 342458051
 
 ## HINDI/Korean/Russia/Bulgarian
 
@@ -185,16 +208,16 @@ I solved by using a language flag form the wikipedia dump file name and UTF exte
 
 ## Russia
 
-real    242m8.505s
-user    237m30.349s
-sys     12m27.707s
+	real    242m8.505s
 
-Pages: 2750000
+	user    237m30.349s
 
-bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc
-21097679 287142597 3782566803
+	sys     12m27.707s
+
+	Pages: 2750000
+
+bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc 21097679 287142597 3782566803
 
 ## Korean
 
-bzcat kowiki-latest-pages-articles.txt.bz2 | wc
- 3541361 56825897 485005016
+bzcat kowiki-latest-pages-articles.txt.bz2 | wc 3541361 56825897 485005016
