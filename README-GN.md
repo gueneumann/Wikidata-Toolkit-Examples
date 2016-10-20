@@ -1,10 +1,10 @@
 # Wikidata and WikiPedia Toolkit Examples
 
-# Useful Other Links
+## Useful Other Links
 
 http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/
 
-# Handling unicode in regexpr
+### Handling unicode in regexpr
 
 http://jrgraphix.net/r/Unicode/0900-097F
 http://www.regular-expressions.info/unicode.html#prop
@@ -21,7 +21,7 @@ http://www.regular-expressions.info/unicode.html#prop
 * extracts field "id"
 * basically the same as /wdtk_examples/src/examples/JsonSerializationProcessor.java
 
-### Exampel call
+### Example call
 
 set 
 	examples.ExampleHelpers.OFFLINE_MODE = true;
