@@ -68,7 +68,6 @@ I will try it out. Seems to work: gntests/Wikipedia2Txt.java
 Code based on http://trulymadlywordly.blogspot.de/2011/03/creating-text-corpus-from-wikipedia.html
 
 
-
 #Extracting Text from WikiPedia Dumps
 
 Do run this on all 22 relevant Wikipedia sites for which I have UD languages 
@@ -102,7 +101,9 @@ time bzcat dewiki-latest-pages-articles.txt.bz2 | gshuf -n 500 > de500randome-se
 
 it takes about 3 minutes
 
-## Processing latest-dump for DE-Wikipedia
+## Wikipedia to text
+
+### Processing latest-dump for DE-Wikipedia
 
 NOTE: tokenization is bad !
 
@@ -110,9 +111,9 @@ Processing took some hours on my computer, but because computer slept over night
 
 Processing data:
 
-- Input: 	data/WikiPedia/dewiki-latest-pages-articles.xml.bz2
+- Input: 	data/WikiPedia/dumps/dewiki-latest-pages-articles.xml.bz2
 
-- Output: 	data/WikiPedia/dewiki-latest-pages-articles.txt
+- Output: 	data/WikiPedia/text/dewiki-latest-pages-articles.txt.bz2
 			
 - resulted in processing of about 
 	
@@ -127,7 +128,7 @@ Processing data:
 
 - Size: about 4,7 GB uncompressed, 1,79 compressed
 
-## Processing latest-dump for EN-Wikipedia
+### Processing latest-dump for EN-Wikipedia
 
 Processing time on my MacBookPro:
 
@@ -139,9 +140,9 @@ Processing time on my MacBookPro:
 
 Processing data:
 
-- Input: 	data/WikiPedia/enwiki-latest-pages-articles.xml.bz2
+- Input: 	data/WikiPedia/dumps/enwiki-latest-pages-articles.xml.bz2
 
-- Output: 	data/WikiPedia/enwiki-latest-pages-articles.txt
+- Output: 	data/WikiPedia/text/enwiki-latest-pages-articles.txt.bz2
 			
 
 - resulted in processing of about 
@@ -158,7 +159,7 @@ Processing data:
 
 - Size: about 11,9 GB uncompressed, 4,37 compressed
 
-## Processing latest-dump for FR-Wikipedia
+### Processing latest-dump for FR-Wikipedia
 
 /Users/gune00/data/WikiPedia/frwiki-latest-pages-articles.xml.bz2
 
@@ -174,7 +175,7 @@ Status so far:
  
  -> Means: missing about 50%
 
-## Processing Danish latest-dump for DA-Wikipedia
+### Processing Danish latest-dump for DA-Wikipedia
 
 Ok, works without problem
 
@@ -182,8 +183,9 @@ wc dawiki-latest-pages-articles.txt
  
  2564059 40883286 267532409 dawiki-latest-pages-articles.txt
 
+## Following runs are performed on Unix external server
 
-## Processing Hungarian latest-dump for HU-Wikipedia
+### Processing Hungarian latest-dump for HU-Wikipedia
 
 Took on lns-87009 from/to gfs-neumann: real    30m38.819s
 
@@ -192,7 +194,7 @@ bzcat huwiki-latest-pages-articles.txt.bz2 | wc
 5118735 70951004 575090000
 
 
-## Processing Turkish latest-dump for TR-Wikipedia
+### Processing Turkish latest-dump for TR-Wikipedia
 
 Took on lns-87009 from/to gfs-neumann: real    18m26.591s
 
@@ -206,7 +208,7 @@ http://www.utf8-chartable.de/unicode-utf8-table.pl?start=2304&number=128
 
 I solved by using a language flag form the wikipedia dump file name and UTF extensions for Java reg expr
 
-## Russia
+### Russia
 
 	real    242m8.505s
 
@@ -218,6 +220,11 @@ I solved by using a language flag form the wikipedia dump file name and UTF exte
 
 bzcat text/ruwiki-latest-pages-articles.txt.bz2 | wc 21097679 287142597 3782566803
 
-## Korean
+### Korean
 
 bzcat kowiki-latest-pages-articles.txt.bz2 | wc 3541361 56825897 485005016
+
+
+## Tokenization and sentence splitting
+
+## SimpleSegmentizer
